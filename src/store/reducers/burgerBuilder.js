@@ -13,7 +13,7 @@ const intialState = {
   ingredients: null,
   totalPrice: 4,
   error: false
-  
+
 
 
 
@@ -48,6 +48,23 @@ totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
 
 
 }
+
+case actionTypes.SET_INGREDIENTS:
+ return {
+...state,
+ingredients: action.ingredients,
+error: false,
+totalPrice: intialState.totalPrice
+
+ }
+
+case actionTypes.FETCH_INGREDIENTS_FAILED:
+
+ return {
+
+   ...state,
+   error: true
+ }
 default:
 return state;
 

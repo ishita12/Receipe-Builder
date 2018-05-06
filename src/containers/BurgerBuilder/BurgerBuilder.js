@@ -19,8 +19,12 @@ purchasing: false
 
 }
 
-
 componentDidMount() {
+  this.props.onInitIngredients();
+}
+
+
+//componentDidMount() {
 /*
 
 }
@@ -104,6 +108,7 @@ queryParams.push('price=' + this.state.totalPrice);
 const queryString = queryParams.join('&');
 search: '?' + queryString,
 */
+this.props.onInitPurchase();
 this.props.history.push('/checkout');
 
 }
@@ -126,7 +131,7 @@ let orderSummary = null;
 if(this.state.loading){
   orderSummary = <Spinner />
 }
-let burger = this.state.error ? <p>Ingredients can not be loaded</p> : <Spinner />
+let burger = this.props.error ? <p>Ingredients can not be loaded</p> : <Spinner />
 
 if(this.props.ings){
   burger = (
@@ -168,8 +173,9 @@ return (
 
 const mapStateToProps = state => {
   return {
-ings: state.ingredients,
-price: state.totalPrice
+ings: state.burgerBuilder.ingredients,
+price: state.burgerBuilder.totalPrice,
+error: state.burgerBuilder.error
 
   }
 }
@@ -180,8 +186,9 @@ const mapDispatchToProps = dispatch => {
 
 return {
 onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
-
+onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients()),
+onInitPurchase: () => dispatch(burgerBuilderActions.purchaseInit())
 }
 
 }
