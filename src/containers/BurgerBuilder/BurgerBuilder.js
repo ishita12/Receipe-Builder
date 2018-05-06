@@ -8,28 +8,21 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions/index';
 
 
 class BurgerBuilder extends Component {
 
 state = {
 
-purchasing: false,
-loading: false,
-error: false
+purchasing: false
 
 }
 
 
 componentDidMount() {
 /*
-axios.get('https://react-burger-2e4b7.firebaseio.com/ingredients.json').then(response => {
-this.setState({ingredients: response.data});
 
-
-}).catch(error => {});
-this.setState({error: true});*/
 }
 /*
 addIngredientHandler = (type) => {
@@ -118,13 +111,14 @@ this.props.history.push('/checkout');
 render () {
 
 const disabledInfo = {
-...this.state.ingredients
+...this.props.ings
 
 };
+for (let key in disabledInfo) {
 
-for(let key in disabledInfo){
-
+  console.log('disabled info   '+disabledInfo);
   disabledInfo[key]= disabledInfo[key] <= 0;
+  console.log('line 128   '+disabledInfo[key]);
 }
 let orderSummary = null;
 
@@ -185,8 +179,8 @@ price: state.totalPrice
 const mapDispatchToProps = dispatch => {
 
 return {
-onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
-onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
+onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
+onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
 
 }
 
